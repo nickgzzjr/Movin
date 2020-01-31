@@ -51,7 +51,6 @@ extension AnimatedTransitioning : UIViewControllerAnimatedTransitioning {
     }
     
     public func interruptibleAnimator(using transitionContext: UIViewControllerContextTransitioning) -> UIViewImplicitlyAnimating {
-          
-        return self.transition.movin.animator
+        self.transition.movin.animator
     }
 }
