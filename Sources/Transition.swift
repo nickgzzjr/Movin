@@ -85,7 +85,7 @@ open class Transition: NSObject {
         
         self.movin.beforeAnimation()
         self.movin.configureAnimations(AnimationDirection(self.movin.duration, type.isPresenting))
-        
+
         if type.isDismissing {
             self.movin.animator.startAnimation()
             self.movin.animator.pauseAnimation()

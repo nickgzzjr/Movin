@@ -113,20 +113,20 @@ public final class Movin {
         return transition
     }
     
-    func end(_ isFoward: Bool) {
+    func end(_ isForward: Bool) {
         Movin.dp("Movin - end")
-        self.finish(isFoward, true)
+        self.finish(isForward, true)
     }
     
-    func cancel(_ isFoward: Bool) {
+    func cancel(_ isForward: Bool) {
         Movin.dp("Movin - cancel")
-        self.animator.isReversed = isFoward
-        self.finish(isFoward, false)
+        self.animator.isReversed = isForward
+        self.finish(isForward, false)
     }
     
-    private func finish(_ isFoward: Bool, _ didComplete: Bool) {
+    private func finish(_ isForward: Bool, _ didComplete: Bool) {
         Movin.dp("Movin - finish")
-        self.animator.addCompletion { [weak self] _ in self?.animations.forEach { $0.finishAnimation(isFoward, didComplete) } }
+        self.animator.addCompletion { [weak self] _ in self?.animations.forEach { $0.finishAnimation(isForward, didComplete) } }
         
         if self.animator.state == .active { self.animator.startAnimation() }
     }
@@ -139,7 +139,7 @@ public final class Movin {
     func configureAnimations(_ animationDirection: AnimationDirection) {
         Movin.dp("Movin - configureAnimations")
         self.animations.forEach { a in
-            self.animator.addAnimations({ a.aninmate(animationDirection) }, delayFactor: a.delayFactor)
+            self.animator.addAnimations({ a.animate(animationDirection) }, delayFactor: a.delayFactor)
         }
     }
     
