@@ -83,7 +83,7 @@ open class Transition: NSObject {
             containerView.addSubview(self.toVC.view)
         }
         
-        self.movin.beforeAnimation()
+        self.movin.beforeAnimation(type.isPresenting)
         self.movin.configureAnimations(AnimationDirection(self.movin.duration, type.isPresenting))
 
         if type.isDismissing {
@@ -121,16 +121,17 @@ open class Transition: NSObject {
         guard let type = self.currentTransitionType(), let gesture = self.gestureTransitioning?.gesture(type) else { return }
         
         gesture.updateGestureHandler = { [weak self] completed in
+            let isForward = self?.currentTransitionType()?.isPresenting ?? true
             if #available(iOS 11.0, *) {
-                self?.movin.interactiveAnimate(completed)
+                self?.movin.interactiveAnimate(isForward, completed)
                 self?.interactiveTransitioning?.update(completed)
             } else {
                 if self?.currentTransitionType()?.isPresenting == true {
-                    self?.movin.interactiveAnimate(completed)
+                    self?.movin.interactiveAnimate(isForward, completed)
                     self?.interactiveTransitioning?.update(completed)
                 } else {
                     let c = 1.0 - completed
-                    self?.movin.interactiveAnimate(c)
+                    self?.movin.interactiveAnimate(isForward, c)
                     self?.interactiveTransitioning?.update(c)
                 }
             }

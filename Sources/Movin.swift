@@ -58,7 +58,7 @@ public final class Movin {
             self.animator.finishAnimation(at: .start)
         }
         
-        self.beforeAnimation()
+        self.beforeAnimation(!self.animator.isReversed)
         self.configureAnimations(AnimationDirection(self.duration, !self.animator.isReversed))
         
         switch mode {
@@ -131,9 +131,9 @@ public final class Movin {
         if self.animator.state == .active { self.animator.startAnimation() }
     }
     
-    func beforeAnimation() {
+    func beforeAnimation(_ isForward: Bool) {
         Movin.dp("Movin - beforeAnimation")
-        self.animations.forEach { $0.beforeAnimation() }
+        self.animations.forEach { $0.beforeAnimation(isForward) }
     }
     
     func configureAnimations(_ animationDirection: AnimationDirection) {
@@ -143,9 +143,9 @@ public final class Movin {
         }
     }
     
-    func interactiveAnimate(_ fractionComplete: CGFloat) {
+    func interactiveAnimate(_ isForward: Bool, _ fractionComplete: CGFloat) {
         Movin.dp("Movin - interactiveAnimate")
-        self.animations.forEach { $0.interactiveAnimate(fractionComplete) }
+        self.animations.forEach { $0.interactiveAnimate(isForward, fractionComplete) }
     }
     
     func finishInteractiveAnimation(_ interactiveTransitioning: InteractiveTransitioning) {

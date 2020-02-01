@@ -24,14 +24,14 @@ public protocol AnimationCompatible: class {
 
     var delayFactor: CGFloat { get set }
 
-    func beforeAnimation()
+    func beforeAnimation(_ isForward: Bool)
     func animate(_ animationDirection: AnimationDirection)
 
     // optional
     func finishAnimation(_ isForward: Bool, _ didComplete: Bool)
 
     // optional
-    func interactiveAnimate(_ fractionComplete: CGFloat)
+    func interactiveAnimate(_ isForward: Bool, _ fractionComplete: CGFloat)
     func finishInteractiveAnimation(_ interactiveTransitioning: InteractiveTransitioning)
 }
 
@@ -42,7 +42,7 @@ public extension AnimationCompatible {
         return self
     }
 
-    func interactiveAnimate(_ fractionComplete: CGFloat) {}
+    func interactiveAnimate(_ isForward: Bool, _ fractionComplete: CGFloat) {}
 
     func finishInteractiveAnimation(_ interactiveTransitioning: InteractiveTransitioning) {}
 }
@@ -68,7 +68,7 @@ public extension ValueAnimationCompatible {
         return self
     }
 
-    func beforeAnimation() {
+    func beforeAnimation(_ isForward: Bool) {
         self.currentValue = self.fromValue
     }
 
@@ -241,7 +241,7 @@ public final class CornerRadiusAnimation : ValueAnimationCompatible {
         }
     }
 
-    public func interactiveAnimate(_ fractionComplete: CGFloat) {
+    public func interactiveAnimate(_ isForward: Bool, _ fractionComplete: CGFloat) {
         if #available(iOS 11.0, *) {
         } else {
             self.currentValue = self.toValue * fractionComplete
@@ -330,7 +330,7 @@ public class CustomAnimation : AnimationCompatible {
         return self
     }
 
-    public func beforeAnimation() {
+    public func beforeAnimation(_ isForward: Bool) {
         self.before?(self.view)
     }
 
