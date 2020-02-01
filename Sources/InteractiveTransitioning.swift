@@ -12,9 +12,9 @@ import UIKit
 public final class InteractiveTransitioning : UIPercentDrivenInteractiveTransition {
     
     weak fileprivate(set) var transition: Transition!
-    let type: TransitionType
+    public let type: TransitionType
     
-    private(set) var isCompleted: Bool = false
+    public var isCompleted: Bool = false
     private var containerView: UIView?
     
     deinit {
