@@ -103,26 +103,28 @@ public class GestureAnimating: NSObject {
 
         Movin.dp(self.currentProgress, key: "GestureAnimating currentProgress : ")
 
+        self.isCompleted = self.currentProgress >= self.panCompletionThresholdRatio
+
         if let lastTranslation = lastTranslation {
 
             let yDelta = lastTranslation.y - translation.y
 
-            if self.count == 0, recognizer.state == .ended {
-                self.currentProgress = self.panCompletionThresholdRatio
-            }
+            // if self.count == 0, recognizer.state == .ended {
+            //     self.currentProgress = self.panCompletionThresholdRatio
+            // }
 
             switch self.direction {
             case .top where yDelta > 15:
                 self.fastSwipe = true
-                self.count = 0
+                self.count = 1
             case .bottom where yDelta < -15:
                 self.fastSwipe = true
-                self.count = 0
+                self.count = 1
             default:
                 if self.fastSwipe {
                     if recognizer.state == .ended {
                         self.fastSwipe = false
-                        self.currentProgress = self.panCompletionThresholdRatio
+                        self.isCompleted = true
                     } else if self.count == 3 {
                         self.fastSwipe = false
                     }
@@ -130,8 +132,6 @@ public class GestureAnimating: NSObject {
                 }
             }
         }
-
-        self.isCompleted = self.currentProgress >= self.panCompletionThresholdRatio
 
         self.updateGestureHandler?(self.currentProgress)
         self.updateGestureStateHandler?(recognizer.state)
