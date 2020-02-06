@@ -24,7 +24,7 @@ public protocol AnimationCompatible: class {
 
     var delayFactor: CGFloat { get set }
 
-    func beforeAnimation(_ isForward: Bool)
+    func beforeAnimation(_ animationDirection: AnimationDirection)
     func animate(_ animationDirection: AnimationDirection)
 
     // optional
@@ -68,7 +68,7 @@ public extension ValueAnimationCompatible {
         return self
     }
 
-    func beforeAnimation(_ isForward: Bool) {
+    func beforeAnimation(_ animationDirection: AnimationDirection) {
         self.currentValue = self.fromValue
     }
 
@@ -330,7 +330,7 @@ public class CustomAnimation : AnimationCompatible {
         return self
     }
 
-    public func beforeAnimation(_ isForward: Bool) {
+    public func beforeAnimation(_ animationDirection: AnimationDirection) {
         self.before?(self.view)
     }
 

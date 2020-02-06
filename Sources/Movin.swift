@@ -57,9 +57,11 @@ public final class Movin {
             self.animator.fractionComplete = 0
             self.animator.finishAnimation(at: .start)
         }
-        
-        self.beforeAnimation(!self.animator.isReversed)
-        self.configureAnimations(AnimationDirection(self.duration, !self.animator.isReversed))
+
+        let animationDirection = AnimationDirection(self.duration, !self.animator.isReversed)
+
+        self.beforeAnimation(animationDirection)
+        self.configureAnimations(animationDirection)
         
         switch mode {
         case .auto:
@@ -131,9 +133,9 @@ public final class Movin {
         if self.animator.state == .active { self.animator.startAnimation() }
     }
     
-    func beforeAnimation(_ isForward: Bool) {
+    func beforeAnimation(_ animationDirection: AnimationDirection) {
         Movin.dp("Movin - beforeAnimation")
-        self.animations.forEach { $0.beforeAnimation(isForward) }
+        self.animations.forEach { $0.beforeAnimation(animationDirection) }
     }
     
     func configureAnimations(_ animationDirection: AnimationDirection) {

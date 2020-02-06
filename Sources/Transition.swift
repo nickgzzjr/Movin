@@ -82,9 +82,11 @@ open class Transition: NSObject {
             }
             containerView.addSubview(self.toVC.view)
         }
+
+        let animationDirection = AnimationDirection(self.movin.duration, type.isPresenting)
         
-        self.movin.beforeAnimation(type.isPresenting)
-        self.movin.configureAnimations(AnimationDirection(self.movin.duration, type.isPresenting))
+        self.movin.beforeAnimation(animationDirection)
+        self.movin.configureAnimations(animationDirection)
 
         if type.isDismissing {
             self.movin.animator.startAnimation()
