@@ -19,7 +19,7 @@ public final class Movin {
     public let duration: TimeInterval
     
     let timingParameters: UITimingCurveProvider
-    let animator: UIViewPropertyAnimator
+    public var animator: UIViewPropertyAnimator
     private var animations: [AnimationCompatible] = []
     
     private var transition: Transition?
@@ -49,7 +49,7 @@ public final class Movin {
         self.animator.addCompletion(c)
         return self
     }
-    
+
     public func startAnimation(_ mode: MovinMode = .auto) {
         Movin.dp("Movin - startAnimation")
         if self.animator.state != .inactive {

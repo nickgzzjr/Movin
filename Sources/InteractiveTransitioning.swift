@@ -11,7 +11,7 @@ import UIKit
 
 public final class InteractiveTransitioning : UIPercentDrivenInteractiveTransition {
     
-    weak fileprivate(set) var transition: Transition!
+    weak public var transition: Transition!
     public let type: TransitionType
     
     public var isCompleted: Bool = false
