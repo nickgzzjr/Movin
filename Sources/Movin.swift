@@ -122,7 +122,7 @@ public final class Movin {
     
     func cancel(_ isForward: Bool) {
         Movin.dp("Movin - cancel")
-        self.animator.isReversed = isForward
+        self.animator.isReversed = true
         self.finish(isForward, false)
     }
     
