@@ -47,7 +47,7 @@ extension AnimatedTransitioning : UIViewControllerAnimatedTransitioning {
             }
         }
 
-        self.interruptibleAnimator(using: transitionContext).startAnimation()
+        self.transition.movin.animator.startAnimation()
 
         let interactiveTransitioning = InteractiveTransitioning(self.transition, type)
 
@@ -56,8 +56,10 @@ extension AnimatedTransitioning : UIViewControllerAnimatedTransitioning {
         self.transition.movin.finishInteractiveAnimation(interactiveTransitioning)
 
     }
-    
+
+    // TODO Keep an eye on this... At some point I commented this in order to fix something
     public func interruptibleAnimator(using transitionContext: UIViewControllerContextTransitioning) -> UIViewImplicitlyAnimating {
         self.transition.movin.animator
     }
+
 }

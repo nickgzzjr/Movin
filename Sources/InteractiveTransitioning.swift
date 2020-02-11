@@ -9,29 +9,31 @@
 import Foundation
 import UIKit
 
-public final class InteractiveTransitioning : UIPercentDrivenInteractiveTransition {
-    
+public final class InteractiveTransitioning: UIPercentDrivenInteractiveTransition {
+
     weak public var transition: Transition!
     public let type: TransitionType
-    
+
     public var isCompleted: Bool = false
     private var containerView: UIView?
-    
+
     deinit {
         Movin.dp("InteractiveTransitioning - deinit")
     }
-    
+
     public init(_ transition: Transition, _ type: TransitionType) {
         self.type = type
         self.transition = transition
-        
+
         super.init()
-        
+
         self.timingCurve = transition.movin.timingParameters
     }
-    
-    public override var duration: CGFloat { return self.transition.movin.duration.toCGFloat }
-    
+
+    public override var duration: CGFloat {
+        return self.transition.movin.duration.toCGFloat
+    }
+
     public override func startInteractiveTransition(_ transitionContext: UIViewControllerContextTransitioning) {
         Movin.dp("InteractiveTransitioning - startInteractiveTransition")
         self.containerView = transitionContext.containerView
@@ -42,30 +44,31 @@ public final class InteractiveTransitioning : UIPercentDrivenInteractiveTransiti
             self?.transition.finishTransition(type, isCompleted, transitionContext.containerView)
             transitionContext.completeTransition(isCompleted)
         }
-        
+
         self.transition.movin.animator.startAnimation()
         self.transition.movin.animator.pauseAnimation()
     }
-    
+
     public override func update(_ percentComplete: CGFloat) {
         super.update(percentComplete)
-        
+
         self.transition.movin.animator.fractionComplete = percentComplete
     }
-    
+
     public override func finish() {
         Movin.dp("InteractiveTransitioning - finish")
         super.finish()
-        
+
         self.isCompleted = true
         self.transition.movin.end(self.type.isPresenting)
         self.transition.movin.finishInteractiveAnimation(self)
     }
-    
+
     public override func cancel() {
         Movin.dp("InteractiveTransitioning - cancel")
+        // TODO Keep an eye on this... At some point I commented super.cancel() in order to fix something
         super.cancel()
-        
+
         self.isCompleted = false
         self.transition.movin.cancel(self.type.isPresenting)
         self.transition.movin.finishInteractiveAnimation(self)
