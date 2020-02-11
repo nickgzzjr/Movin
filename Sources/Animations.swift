@@ -229,7 +229,7 @@ public final class CornerRadiusAnimation : ValueAnimationCompatible {
 
     public func animate(_ animationDirection: AnimationDirection) {
         if #available(iOS 11.0, *) {
-            self.currentValue = self.toValue
+            self.currentValue = animationDirection.isForward ? self.toValue : self.fromValue
         } else {
             let animation = CABasicAnimation(keyPath: "cornerRadius")
             animation.duration = animationDirection.duration
