@@ -69,11 +69,11 @@ public extension ValueAnimationCompatible {
     }
 
     func beforeAnimation(_ animationDirection: AnimationDirection) {
-        self.currentValue = self.fromValue
+        self.currentValue = animationDirection.isForward ? self.fromValue : self.toValue
     }
 
     func animate(_ animationDirection: AnimationDirection) {
-        self.currentValue = self.toValue
+        self.currentValue = animationDirection.isForward ? self.toValue : self.fromValue
     }
 
     func finishAnimation(_ isForward: Bool, _ didComplete: Bool) {
